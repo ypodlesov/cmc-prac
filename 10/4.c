@@ -30,7 +30,8 @@ push_double(char *buf, double val)
     }
 }
 
-void push_pointer(char *buf, char *val) 
+void 
+push_pointer(char *buf, char *val) 
 {
     char *tmp = (char *) &val;
     for (int i = 0; i < sizeof(char *); ++i) {
