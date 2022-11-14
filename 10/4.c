@@ -24,7 +24,7 @@ void
 push_double(char *buf, double val)
 {
     char *tmp = (char *) &val;
-    for (int i = 0; i < sizeof(long long); ++i) {
+    for (int i = 0; i < sizeof(val); ++i) {
         buf[i] = *tmp;
         ++tmp;
     }
