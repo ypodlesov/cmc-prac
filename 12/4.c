@@ -25,10 +25,16 @@ gen_name(int size)
     return res;
 }
 
-int
-exist(char *path) 
+char *
+base_name(void)
 {
-    return 0;
+    if (getenv("XDG_RUNTIME_DIR")) {
+        return getenv("XDG_RUNTIME_DIR");
+    }
+    if (getenv("TMPDIR")) {
+        return getenv("TMPDIR");
+    }
+    return strdup("/tmp");
 }
 
 int
@@ -38,28 +44,27 @@ main(int argc, char *argv[])
         return 0;
     }
     char content[FILE_SIZE] = "#! /bin/python3\n";
+    strcat(content, "import sys\n");
     strcat(content, "from os import remove\n");
     strcat(content, "from sys import argv\n");
+    strcat(content, "sys.set_int_max_str_digits(1000000)\n");
     strcat(content, "print(");
     for (int i = 1; i < argc; ++i) {
         strcat(content, argv[i]);
         strcat(content, i == argc - 1 ? ")\n" : " * ");
     }
     strcat(content, "remove(argv[0])\n");
-    //printf("%s\n", content);
-    char path[PATH_MAX] = "src";
-    //char *name = gen_name(MIN_LEN + rand() % MAX_LEN);
-    //strcat(path, name);
-    //free(name);
-    //printf("%s\n", path);
+    char path[PATH_MAX];
+    strcpy(path, base_name());
+    strcat(path, "/");
+    char *name = gen_name(MIN_LEN + rand() % MAX_LEN);
+    strcat(path, name);
+    free(name);
     int fd = open(path, O_CREAT | O_RDWR | O_TRUNC | O_CLOEXEC, MODE);
+    if (fd < 0) exit(1);
     FILE *file = fdopen(fd, "w");
     fprintf(file, "%s\n", content);
     fclose(file);
-    //close(fd);
-    //char cmd[PATH_MAX] = "./";
-    //strcat(cmd, path);
-    //system(cmd);
     execlp(path, path, NULL);
     exit(1);
 }
