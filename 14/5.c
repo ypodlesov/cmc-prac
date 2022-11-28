@@ -7,23 +7,24 @@
 #include <sys/wait.h>
 
 int 
-is_prime(int n) 
+is_prime(unsigned long long n) 
 {
-    for (int i = 2; i * i <= n; ++i) {
+    for (unsigned long long i = 2; i * i <= n; ++i) {
         if (n % i == 0) return 0;
     }
     return 1;
 }
 
-int last;
+volatile unsigned long long last;
 
 void 
 handler(int sig) 
 {
     if (sig == SIGINT) {
         static int cnt = 0;
-        if (cnt == 4) _exit(0);
-        printf("%d\n", last);
+        if (cnt == 3) _exit(0);
+        printf("%llu\n", last);
+        fflush(stdout);
         ++cnt;
     } else if (sig == SIGTERM) {
         _exit(0);
@@ -39,9 +40,10 @@ main(void)
     sigaction(SIGINT, &act, NULL);
     sigaction(SIGTERM, &act, NULL);
     printf("%d\n", getpid());
-    int low, high;
-    scanf("%d%d", &low, &high);
-    for (int i = low; i < high; ++i) {
+    fflush(stdout);
+    unsigned long long low, high;
+    scanf("%llu%llu", &low, &high);
+    for (unsigned long long i = low; i < high; ++i) {
         if (is_prime(i)) last = i;
     }
     printf("-1\n");

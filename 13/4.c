@@ -1,50 +1,68 @@
-// код с консультации: но там писал его я в том числе 
-
+// code from consultation
 #include <unistd.h>
 #include <sys/wait.h>
 #include <fcntl.h>
 #include <stdlib.h>
 
-void 
-killall(int *proc, int n) 
+#define SUCCESS(A) (WIFEXITED(A) && !(WEXITSTATUS(A)))
+
+void
+terminate_all(int *pids) 
 {
-    for (int i = 0; i < n; ++i) {
-        kill(proc[i], SIGKILL);
+    for (int i = 0; pids[i] != -1; ++i) {
+        kill(pids[i], SIGKILL);
+        pids[i] = -1;
     }
 }
 
 int 
 main(int argc, char *argv[])
 {
-    int *proc = calloc(argc - 1, sizeof(*proc));
-    int last_proc = 0;
+    int pids[argc];
+    for (int i = 0; i < argc; ++i) pids[i] = -1;
     int fds[2] = { 0, 1 };
     for (int i = 1; i < argc; ++i) {
         int tmpfds[2] = { 0, 1 };
         if (i != argc - 1) {
-            pipe2(tmpfds, O_CLOEXEC);
+            if (pipe2(tmpfds, O_CLOEXEC)) {
+                exit(1);
+            }
         }
-        int pid = fork();
-        if (pid < 0) {
-            killall(proc, argc - 1);
-            exit(1); 
-        } else if (pid > 0) {
-            proc[last_proc++] = pid;
+        pids[i-1] = fork();
+        if (pids[i-1] < 0) {
+            _exit(1);
+        } else if (!pids[i-1]) {
             dup2(fds[0], STDIN_FILENO);
             dup2(tmpfds[1], STDOUT_FILENO);
             execlp(argv[i], argv[i], NULL);
-            _exit(1);
+            _exit(0);
         }
         if (tmpfds[1] != 1) {
-            close(tmpfds[1]);
+            if (close(tmpfds[1])) {
+                _exit(1);
+            }
         }
         if (fds[0] != 0) {
-            close(fds[0]);
+            if (close(fds[0])) {
+                _exit(1);
+            }
         }
         fds[0] = tmpfds[0];
     }
-    free(proc);
-    while (wait(NULL) > 0) {}
-
+    if (close(fds[0])) {
+        terminate_all(pids);
+        exit(1);
+    }
+    if (close(fds[1])) {
+        terminate_all(pids);
+        exit(1);
+    }
+    int status;
+    while (wait(&status) > 0) {
+        if (!SUCCESS(status)) {
+            terminate_all(pids);
+            exit(1);
+        }
+    }
     return 0;
 }
