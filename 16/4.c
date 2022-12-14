@@ -6,40 +6,32 @@
 
 unsigned int
 mpow(unsigned int n) {
-    int res = 0, cur = 0;
-    while ((1 << cur) <= n) {
-        if (n % (1 << cur) == 0) {
+    long long res = 0, cur = 1;
+    while (cur <= n) {
+        if (n % cur == 0) {
             res = cur;
         }
+        cur <<= 1;
     }
-    return res;
+    return (unsigned int) res;
 }
 
 int
 main(void)
 {
-    unsigned int *szs = calloc(1, sizeof(*szs));
-    unsigned int cap = 1, size = 0;
     unsigned int tmp;
+    unsigned int cur_align = 0;
     unsigned int align = 0;
+    unsigned int cur = 0;
     while ((scanf("%u", &tmp)) == 1) {
-        if (size == cap) {
-            cap <<= 1;
-            printf("ok\n");
-            szs = realloc(szs, cap * sizeof(*szs));
-        }
-        szs[size++] = tmp;
-        align = MAX(align, mpow(tmp));
+        if (!tmp) continue;
+        cur_align = mpow(tmp);
+        cur = (cur + cur_align - 1) / cur_align * cur_align;
+        cur += tmp;
+        align = MAX(align, cur_align);
     }
-    unsigned int res = 0;
-    for (int i = 0; i < size; ++i) {
-        if (szs[i] % align == 0) {
-            res += szs[i];
-        } else {
-            res += (szs[i] + align - 1) / align * align;
-        }
-    }
-    printf("%u %u\n", res == 0 ? 1 : res, align == 0 ? 1 : align);
+    if (align) cur = (cur + align - 1) / align * align;
+    printf("%u %u\n", cur == 0 ? 1 : cur , align == 0 ? 1 : align);
 
 
     return 0;
