@@ -35,7 +35,6 @@ main(int argc, char *argv[])
                         close(fd[1]);
                         _exit(0);
                     } else {
-                        printf("end\n");
                         close(fd[1]);
                         _exit(1);
                     }
@@ -45,11 +44,17 @@ main(int argc, char *argv[])
                 int status;
                 wait(&status);
                 if (!cur_depth) {
+                    read(fd[0], &num, sizeof(num));
                     if (!SUCCESS(status)) {
                         close(fd[0]);
                         break;
+                    } else {
+                        close(fd[0]);
+                        continue;
                     }
                 }
+                close(fd[0]);
+                _exit(0);
             }
         }
     }
