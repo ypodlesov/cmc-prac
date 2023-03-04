@@ -1,34 +1,13 @@
 #include <iostream>
 
-using std::cin, std::cout, std::endl;
+class A {
+  public:
+    A() noexcept { std::cin >> a_; } 
+    A(A &a) : A() { flag = true; a_ += a.a_; }
+    ~A() noexcept { if (flag) std::cout << a_ << std::endl; }
 
-class A
-{
-    int n{};
-    bool flag{};
-public:
-    A() 
-    {
-        cin >> this->n;
-    }
-    A(A &a) 
-    {
-        flag = true;
-        cin >> n;
-        n += a.n;
-    }
-    ~A() 
-    {
-        if (flag) cout << this->n << endl;
-        // cout << this->n << endl;
-    }
+  private:
+    int a_{};
+    bool flag{}; 
 };
 
-// int
-// main()
-// {
-//     A a, b(a);
-
-
-//     return 0;
-// }

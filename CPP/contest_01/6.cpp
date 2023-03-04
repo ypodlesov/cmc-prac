@@ -1,89 +1,81 @@
 #include <iostream>
+#include <cmath>
+#include <ios>
 #include <iomanip>
-#include <math.h>
 
-#define EPS 0.000001
+constexpr double kEps = 1e-6;
 
-using std::cin, std::cout, std::endl, std::vector, std::istream, std::ostream;
+class Point {
+  public:
+    double x() const noexcept { return x_; }
+    double y() const noexcept { return y_; }
+    void x(double val) noexcept { x_ = val; }
+    void y(double val) noexcept { y_ = val; }
+    Point() noexcept = default;
+    Point (double x, double y) noexcept : x_{x}, y_{y} {}
 
-struct Point 
-{
-    long double x, y;
-    Point(long double a = 0, long double b = 0) 
-    {
-        x = a;
-        y = b;
-    }
+  private:
+    double x_{}, y_{};
 };
 
-istream & operator >> (istream & in, Point & P);
-ostream & operator << (ostream & out, const Point & P);
-void line_eq_coef(Point A, Point B, long double &a, long double &b, long double &c);
-bool parallel_lines(long double a1, long double b1, long double c1, long double a2, long double b2, long double c2);
-bool same_lines(long double a1, long double b1, long double c1, long double a2, long double b2, long double c2);
-bool lines_intersect(long double a1, long double b1, long double c1, long double a2, long double b2, long double c2);
-Point lines_intersection_point(long double a1, long double b1, long double c1, long double a2, long double b2, long double c2);
-
-istream & operator >> (istream & in, Point & P) {
-    in >> P.x >> P.y;
-    return in;
+std::istream& operator>>(std::istream &is, Point &p) {
+    double x, y;
+    is >> x >> y;
+    p.x(x), p.y(y);
+    return is;
 }
 
-ostream & operator << (ostream & out, const Point & P) {
-    out << P.x << ' ' << P.y;
-    return out;
+std::ostream& operator<<(std::ostream &os, const Point &p) {
+    os << std::fixed << std::setprecision(5);
+    os << p.x() << ' ' << p.y();
+    return os;
 }
 
+class Line {
+  public:
+    Line (const Point &p1, const Point &p2) { 
+        a_ = p1.y() - p2.y();
+        b_ = p2.x() - p1.x();
+        c_ = p2.x() * p1.y() - p1.x() * p2.y();
+    }    
+    double a() const noexcept { return a_; }
+    double b() const noexcept { return b_; }
+    double c() const noexcept { return c_; }
 
-bool parallel_lines(long double a1, long double b1, long double c1, long double a2, long double b2, long double c2) {
-    return (fabs(a1 - a2) < EPS) && (fabs(b1 - b2) < EPS);
+  private:
+    double a_{}, b_{}, c_{};
+};
+
+bool AreEqual(const double a, const double b) {
+    return abs(a - b) < kEps;
 }
 
-bool same_lines(long double a1, long double b1, long double c1, long double a2, long double b2, long double c2) {
-    return parallel_lines(a1, b1, c1, a2, b2, c2) && (fabs(c1 - c2) < EPS);
+bool AreSame(const Line &l1, const Line &l2) {
+    return (AreEqual(l1.a(), l2.a()) && AreEqual(l1.b(), l2.b()) 
+                                     && AreEqual(l1.c(), l2.c()));
 }
 
-bool lines_intersect(long double a1, long double b1, long double c1, long double a2, long double b2, long double c2) {
-    if (parallel_lines(a1, b1, c1, a2, b2, c2) || same_lines(a1, b1, c1, a2, b2, c2)) return false;
-    return true;
+bool AreIntersecting(const Line &l1, const Line &l2) {
+    return (!AreEqual((l1.a() * l2.b() - l1.b() * l2.a()), 0.0));
 }
 
-Point lines_intersection_point(long double a1, long double b1, long double c1, long double a2, long double b2, long double c2) {
-    long double x, y;
-    x = (c2 * b1 - c1 * b2) / (a1 * b2 - a2 * b1);
-    if (fabs(b1) < EPS) y = (-c2 - a2 * x) / b2;
-    else y = (-c1 - a1 * x) / b1;
-    return Point(x, y);
+Point IntersectionPoint(const Line &l1, const Line &l2) {
+    double det = l1.a() * l2.b() - l1.b() * l2.a();
+    return Point((l1.b() * l2.c() - l1.c() * l2.b()) / det, (l1.c() * l2.a() - l1.a() * l2.c()) / det);
 }
 
-void 
-line_eq_coef(Point A, Point B, long double &a, long double &b, long double &c)
-{
-    a = B.y - A.y;
-    b = A.x - B.x;
-    c = A.x * (A.y - A.y) + A.y * (B.x - A.x);
-}
+int main() {
 
-int 
-main()
-{
-
-    Point A, B, C, D;
-    cin >> A >> B >> C >> D;
-    long double a1, b1, c1, a2, b2, c2;
-    line_eq_coef(A, B, a1, b1, c1);
-    line_eq_coef(C, C, a2, b2, c2);
-    cout << a1 << ' ' << b1 << ' ' << c1 << endl;
-    if (!lines_intersect(a1, b1, c1, a2, b2, c2)) {
-        cout << 0 << endl;
-    } else if (same_lines(a1, b1, c1, a2, b2, c2)) {
-        cout << 2 << endl;
+    Point a, b, c, d;
+    std::cin >> a >> b >> c >> d;
+    Line l1(a, b);
+    Line l2(c, d);
+    if (AreSame(l1, l2)) {
+        std::cout << 2 << std::endl;
+    } else if (AreIntersecting(l1, l2)) {
+        std::cout << 1 << ' ' << IntersectionPoint(l1, l2) << std::endl;
     } else {
-        //cout << std::setprecision(10);
-        cout << lines_intersection_point(a1, b1, c1, a2, b2, c2) << endl;  
-        // Point Ans = lines_intersection_point(a1, b1, c1, a2, b2, c2);  
-        // cout << Ans.x << ' ' << Ans.y << endl;
+        std::cout << 0 << std::endl;
     }
 
-    return 0;
 }

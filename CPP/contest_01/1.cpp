@@ -1,34 +1,14 @@
-#include <iostream>
+class Sum {
+  public:
+    Sum(int a, int b) noexcept : a_{a}, b_{b} {}
+    Sum(Sum a, int b) noexcept : Sum{a.get(), b} {}
+    [[nodiscard]] int get() const noexcept { return a_ + b_; }
 
-class Sum
-{
-    int a{}, b{};
-public:
-    Sum(int a, int b)
-    {
-        this->a = a;
-        this->b = b;
-    }
-    Sum(Sum a, int b)
-    {
-        this->a = a.get();
-        this->b = b;
-    }
-    int 
-    get() const
-    {
-        return this->a + this->b;
-    }    
+  private:
+    int a_{}, b_{};
 };
 
-using std::cin, std::cout, std::endl;
 
-// int
-// main()
-// {
-//     int a, b, c;
-//     cin >> a >> b >> c;
-//     cout << Sum(Sum(a, b), c).get() << endl;
 
-//     return 0;
-// }
+
+
