@@ -6,8 +6,8 @@ int main() {
 
    for (const auto &row : m) {
         for (auto cell : row) {
-            cout << cell << " ";
+            std::cout << cell << " ";
         }
-        cout << "\n";
+        std::cout << "\n";
    }
 }

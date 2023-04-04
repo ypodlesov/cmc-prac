@@ -1,0 +1,85 @@
+priority_queue.cpp: In function 'int main()':
+priority_queue.cpp:10:50: error: too few arguments to function 'bool cmp(const std::pair<int, int>&, const std::pair<int, int>&)'
+   10 |     std::priority_queue<std::pair<int,int>> q{cmp()};
+      |                                               ~~~^~
+priority_queue.cpp:5:6: note: declared here
+    5 | bool cmp(const std::pair<int,int> &a, const std::pair<int,int> &b) {
+      |      ^~~
+priority_queue.cpp:10:52: error: no matching function for call to 'std::priority_queue<std::pair<int, int> >::priority_queue(<brace-enclosed initializer list>)'
+   10 |     std::priority_queue<std::pair<int,int>> q{cmp()};
+      |                                                    ^
+In file included from /opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/queue:64,
+                 from priority_queue.cpp:1:
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:693:9: note: candidate: 'template<class _InputIterator, class _Alloc, class _Requires> std::priority_queue<_Tp, _Sequence, _Compare>::priority_queue(_InputIterator, _InputIterator, const _Compare&, _Sequence&&, const _Alloc&) [with _Alloc = _InputIterator; _Requires = _Alloc; _Tp = std::pair<int, int>; _Sequence = std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >; _Compare = std::less<std::pair<int, int> >]'
+  693 |         priority_queue(_InputIterator __first, _InputIterator __last,
+      |         ^~~~~~~~~~~~~~
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:693:9: note:   template argument deduction/substitution failed:
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:681:9: note: candidate: 'template<class _InputIterator, class _Alloc, class, class _Requires> std::priority_queue<_Tp, _Sequence, _Compare>::priority_queue(_InputIterator, _InputIterator, const _Compare&, const _Sequence&, const _Alloc&) [with _Alloc = _InputIterator; <template-parameter-2-3> = _Alloc; _Requires = <template-parameter-1-3>; _Tp = std::pair<int, int>; _Sequence = std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >; _Compare = std::less<std::pair<int, int> >]'
+  681 |         priority_queue(_InputIterator __first, _InputIterator __last,
+      |         ^~~~~~~~~~~~~~
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:681:9: note:   template argument deduction/substitution failed:
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:673:9: note: candidate: 'template<class _InputIterator, class _Alloc, class, class _Requires> std::priority_queue<_Tp, _Sequence, _Compare>::priority_queue(_InputIterator, _InputIterator, const _Compare&, const _Alloc&) [with _Alloc = _InputIterator; <template-parameter-2-3> = _Alloc; _Requires = <template-parameter-1-3>; _Tp = std::pair<int, int>; _Sequence = std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >; _Compare = std::less<std::pair<int, int> >]'
+  673 |         priority_queue(_InputIterator __first, _InputIterator __last,
+      |         ^~~~~~~~~~~~~~
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:673:9: note:   template argument deduction/substitution failed:
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:665:9: note: candidate: 'template<class _InputIterator, class _Alloc, class, class _Requires> std::priority_queue<_Tp, _Sequence, _Compare>::priority_queue(_InputIterator, _InputIterator, const _Alloc&) [with _Alloc = _InputIterator; <template-parameter-2-3> = _Alloc; _Requires = <template-parameter-1-3>; _Tp = std::pair<int, int>; _Sequence = std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >; _Compare = std::less<std::pair<int, int> >]'
+  665 |         priority_queue(_InputIterator __first, _InputIterator __last,
+      |         ^~~~~~~~~~~~~~
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:665:9: note:   template argument deduction/substitution failed:
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:651:9: note: candidate: 'template<class _InputIterator, class> std::priority_queue<_Tp, _Sequence, _Compare>::priority_queue(_InputIterator, _InputIterator, const _Compare&, _Sequence&&) [with <template-parameter-2-2> = _InputIterator; _Tp = std::pair<int, int>; _Sequence = std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >; _Compare = std::less<std::pair<int, int> >]'
+  651 |         priority_queue(_InputIterator __first, _InputIterator __last,
+      |         ^~~~~~~~~~~~~~
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:651:9: note:   template argument deduction/substitution failed:
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:640:9: note: candidate: 'template<class _InputIterator, class> std::priority_queue<_Tp, _Sequence, _Compare>::priority_queue(_InputIterator, _InputIterator, const _Compare&, const _Sequence&) [with <template-parameter-2-2> = _InputIterator; _Tp = std::pair<int, int>; _Sequence = std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >; _Compare = std::less<std::pair<int, int> >]'
+  640 |         priority_queue(_InputIterator __first, _InputIterator __last,
+      |         ^~~~~~~~~~~~~~
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:640:9: note:   template argument deduction/substitution failed:
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:631:9: note: candidate: 'template<class _InputIterator, class> std::priority_queue<_Tp, _Sequence, _Compare>::priority_queue(_InputIterator, _InputIterator, const _Compare&) [with <template-parameter-2-2> = _InputIterator; _Tp = std::pair<int, int>; _Sequence = std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >; _Compare = std::less<std::pair<int, int> >]'
+  631 |         priority_queue(_InputIterator __first, _InputIterator __last,
+      |         ^~~~~~~~~~~~~~
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:631:9: note:   template argument deduction/substitution failed:
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:596:9: note: candidate: 'template<class _Alloc, class _Requires> std::priority_queue<_Tp, _Sequence, _Compare>::priority_queue(std::priority_queue<_Tp, _Sequence, _Compare>&&, const _Alloc&) [with _Requires = _Alloc; _Tp = std::pair<int, int>; _Sequence = std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >; _Compare = std::less<std::pair<int, int> >]'
+  596 |         priority_queue(priority_queue&& __q, const _Alloc& __a)
+      |         ^~~~~~~~~~~~~~
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:596:9: note:   template argument deduction/substitution failed:
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:592:9: note: candidate: 'template<class _Alloc, class _Requires> std::priority_queue<_Tp, _Sequence, _Compare>::priority_queue(const std::priority_queue<_Tp, _Sequence, _Compare>&, const _Alloc&) [with _Requires = _Alloc; _Tp = std::pair<int, int>; _Sequence = std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >; _Compare = std::less<std::pair<int, int> >]'
+  592 |         priority_queue(const priority_queue& __q, const _Alloc& __a)
+      |         ^~~~~~~~~~~~~~
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:592:9: note:   template argument deduction/substitution failed:
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:587:9: note: candidate: 'template<class _Alloc, class _Requires> std::priority_queue<_Tp, _Sequence, _Compare>::priority_queue(const _Compare&, _Sequence&&, const _Alloc&) [with _Requires = _Alloc; _Tp = std::pair<int, int>; _Sequence = std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >; _Compare = std::less<std::pair<int, int> >]'
+  587 |         priority_queue(const _Compare& __x, _Sequence&& __c, const _Alloc& __a)
+      |         ^~~~~~~~~~~~~~
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:587:9: note:   template argument deduction/substitution failed:
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:581:9: note: candidate: 'template<class _Alloc, class _Requires> std::priority_queue<_Tp, _Sequence, _Compare>::priority_queue(const _Compare&, const _Sequence&, const _Alloc&) [with _Requires = _Alloc; _Tp = std::pair<int, int>; _Sequence = std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >; _Compare = std::less<std::pair<int, int> >]'
+  581 |         priority_queue(const _Compare& __x, const _Sequence& __c,
+      |         ^~~~~~~~~~~~~~
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:581:9: note:   template argument deduction/substitution failed:
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:575:9: note: candidate: 'template<class _Alloc, class _Requires> std::priority_queue<_Tp, _Sequence, _Compare>::priority_queue(const _Compare&, const _Alloc&) [with _Requires = _Alloc; _Tp = std::pair<int, int>; _Sequence = std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >; _Compare = std::less<std::pair<int, int> >]'
+  575 |         priority_queue(const _Compare& __x, const _Alloc& __a)
+      |         ^~~~~~~~~~~~~~
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:575:9: note:   template argument deduction/substitution failed:
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:571:9: note: candidate: 'template<class _Alloc, class _Requires> std::priority_queue<_Tp, _Sequence, _Compare>::priority_queue(const _Alloc&) [with _Requires = _Alloc; _Tp = std::pair<int, int>; _Sequence = std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >; _Compare = std::less<std::pair<int, int> >]'
+  571 |         priority_queue(const _Alloc& __a)
+      |         ^~~~~~~~~~~~~~
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:571:9: note:   template argument deduction/substitution failed:
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:556:9: note: candidate: 'template<class _Seq, class _Requires> std::priority_queue<_Tp, _Sequence, _Compare>::priority_queue() [with _Requires = _Seq; _Tp = std::pair<int, int>; _Sequence = std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >; _Compare = std::less<std::pair<int, int> >]'
+  556 |         priority_queue()
+      |         ^~~~~~~~~~~~~~
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:556:9: note:   template argument deduction/substitution failed:
+priority_queue.cpp:10:52: note:   candidate expects 0 arguments, 1 provided
+   10 |     std::priority_queue<std::pair<int,int>> q{cmp()};
+      |                                                    ^
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:565:7: note: candidate: 'std::priority_queue<_Tp, _Sequence, _Compare>::priority_queue(const _Compare&, _Sequence&&) [with _Tp = std::pair<int, int>; _Sequence = std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >; _Compare = std::less<std::pair<int, int> >]'
+  565 |       priority_queue(const _Compare& __x, _Sequence&& __s = _Sequence())
+      |       ^~~~~~~~~~~~~~
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:565:7: note:   conversion of argument 1 would be ill-formed:
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:560:7: note: candidate: 'std::priority_queue<_Tp, _Sequence, _Compare>::priority_queue(const _Compare&, const _Sequence&) [with _Tp = std::pair<int, int>; _Sequence = std::vector<std::pair<int, int>, std::allocator<std::pair<int, int> > >; _Compare = std::less<std::pair<int, int> >]'
+  560 |       priority_queue(const _Compare& __x, const _Sequence& __s)
+      |       ^~~~~~~~~~~~~~
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:560:7: note:   candidate expects 2 arguments, 1 provided
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:498:11: note: candidate: 'constexpr std::priority_queue<std::pair<int, int> >::priority_queue(const std::priority_queue<std::pair<int, int> >&)'
+  498 |     class priority_queue
+      |           ^~~~~~~~~~~~~~
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:498:11: note:   conversion of argument 1 would be ill-formed:
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:498:11: note: candidate: 'constexpr std::priority_queue<std::pair<int, int> >::priority_queue(std::priority_queue<std::pair<int, int> >&&)'
+/opt/homebrew/Cellar/gcc/12.2.0/include/c++/12/bits/stl_queue.h:498:11: note:   conversion of argument 1 would be ill-formed:
